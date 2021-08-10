@@ -4,6 +4,7 @@ public:
     virtual void Start() {}
     virtual void Update() {}
 };
+//Test
 class  GameBaseClass :public SubClass {
 public:
     void PushQStart(SubClass* _a);
