@@ -14,6 +14,7 @@ public:
 	virtual void Start() { printf("start\n"); }
     virtual void Update() { printf("update\n"); }
 };
+//Test
 class  GameBaseClass :public SubClass {
 public:
     void PushQStart(SubClass* _a);
