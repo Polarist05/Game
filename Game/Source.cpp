@@ -12,36 +12,36 @@ using namespace std;
 void ActivateStart();
 void ActivateUpdate();
 class c1 :public GameBaseClass {
-public:    
-    void Start() override{
-      printf("123\n");
-    }
-};
-class c2 :public GameBaseClass {
 public:
-    void Start() override {
-        printf("This is show\n");
-    }
-    void Update() override {
-        //printf("Between Update\n");
-    }
+    c1() {printf("C1 hase been made\n");}
+    ~c1() { printf("C1 hase been destoyed\n"); }
+    void Start()override { printf("C1 starting\n"); }
+    void Update()override{ printf("C2 ending\n"); }
 };
 int main() {
-    c1 a;
-    c2 b;
+    weak_ptr<GameBaseClass> a = Instantiate<GameBaseClass>();
+    cout << endl;
+    weak_ptr<c1> b = Instantiate<c1>();
+    cout << endl;
     ActivateStart();
+    cout << endl;
+    ActivateUpdate();
+    cout << endl;
+    Destroy(b);
+    cout << endl;
+    printf("Use count:%d\n", a.use_count());
+    if (a.expired()) { printf("Already Destroy\n"); }
     Window window(VideoMode(800, 800), "My window");
     window.setFramerateLimit(60);
     // run the program as long as the window is open
-    int* c;
-    while (window.isOpen())
+    /*while (window.isOpen())
     {
-        ActivateUpdate();
+        
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
         while (window.pollEvent(event))
         {
-            ActivateUpdate();
+            
             // "close requested" event: we close the 
             if (event.type == Event::Closed)
                 window.close();
@@ -51,5 +51,6 @@ int main() {
             }
 
         }
-    }
+    }*/
+    cout << endl<<"end program"<<endl; 
 }
