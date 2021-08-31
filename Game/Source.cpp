@@ -1,56 +1,47 @@
-#include<SFML\Audio.hpp>
-#include<SFML\Config.hpp>
-#include<SFML\Graphics.hpp>
-#include<SFML\System.hpp>
-#include<SFML\Window.hpp>
-#include<iostream>
-#include<stdio.h>
-#include<iostream>
+#include "WorldControl.h"
 #include "GameBaseClass.h"
+#include <iostream>
+#include <stdio.h>
+#include <iostream>
+#include "Worldcontrol.h"
+#include "Player.h"
+#include "GameSprite.h"
 using namespace sf;
 using namespace std;
 void ActivateStart();
 void ActivateUpdate();
-class c1 :public GameBaseClass {
-public:
-    c1() {printf("C1 hase been made\n");}
-    ~c1() { printf("C1 hase been destoyed\n"); }
-    void Start()override { printf("C1 starting\n"); }
-    void Update()override{ printf("C2 ending\n"); }
-};
+void KeyHold();
+View _view(Vector2f(0,0),Vector2f(1920,1080));
+View& view() { return _view; }
+class  a1 :public GameSprite {};
+class  a2 :public Player {};
 int main() {
-    weak_ptr<GameBaseClass> a = Instantiate<GameBaseClass>();
-    cout << endl;
-    weak_ptr<c1> b = Instantiate<c1>();
-    cout << endl;
+    weak_ptr<Player> p1= Instantiate<Player>();
+    printf("\n");
+    weak_ptr<GameSprite> p2 = Instantiate<GameSprite>();
+    printf("\n");
+    weak_ptr<a1> p3 = Instantiate<a1>();
+    printf("\n");
+    weak_ptr<a2> p4 = Instantiate<a2>();
+    printf("\n");
+    WorldControl::window().setFramerateLimit(60);
+    WorldControl::window().setKeyRepeatEnabled(false);
     ActivateStart();
-    cout << endl;
-    ActivateUpdate();
-    cout << endl;
-    Destroy(b);
-    cout << endl;
-    printf("Use count:%d\n", a.use_count());
-    if (a.expired()) { printf("Already Destroy\n"); }
-    Window window(VideoMode(800, 800), "My window");
-    window.setFramerateLimit(60);
-    // run the program as long as the window is open
-    /*while (window.isOpen())
+    while (WorldControl::window().isOpen())
     {
-        
+        WorldControl::window().clear(sf::Color::Red);
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
-        while (window.pollEvent(event))
+        while (WorldControl::window().pollEvent(event))
         {
-            
             // "close requested" event: we close the 
             if (event.type == Event::Closed)
-                window.close();
-            if (event.type == Event::KeyPressed) {
-                if (event.key.code == Keyboard::D)
-                    window.close();
-            }
-
+                WorldControl::window().close();
         }
-    }*/
+        WorldControl::window().setView(view());
+        KeyHold();
+        ActivateUpdate();
+        WorldControl::window().display();
+    }
     cout << endl<<"end program"<<endl; 
 }
